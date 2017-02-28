@@ -61,10 +61,12 @@ class TPFStore(Store):
     def open(self, start_iri, create=False):
         self.collec = TriplePatternFragment.from_iri(start_iri).dataset
 
-    def add(self, (subject, predicate, object), context, quoted=False):
+    def add(self, tuple, context, quoted=False):
+        subject, predicate, object =tuple
         raise NotImplemented("TPFStore is readonly")
 
-    def remove(self, (subject, predicate, object), context=None):
+    def remove(self, tuple, context=None):
+        subject, predicate, object =tuple
         raise NotImplemented("TPFStore is readonly")
 
     def triples(self, triple_pattern, context=None):

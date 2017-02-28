@@ -319,7 +319,8 @@ class BoundOperation(Operation):
             ctype = effective_headers.setdefault('content-type', 'application/ld+json')
             body = body.serialize(format=ctype)
 
-        return http.request(unicode(self.target_iri),
+        #return http.request(unicode(self.target_iri),
+        return http.request(self.target_iri,
                             self.method,
                             body,
                             effective_headers)
@@ -541,7 +542,7 @@ class IriTemplate(Resource):
         graph = self.graph
         data = {}
         for mapping in self.mappings:
-            for prop, value in values.iteritems():
+            for prop, value in values.items(): #values.iteritems():
                 if (prop, SUBPROP, mapping.property) in graph:
                     values.pop(prop)
                     if value is not None:
@@ -558,7 +559,8 @@ class IriTemplate(Resource):
 
 def _format_variable(term, mode):
     if mode == 0: # Basic
-        return unicode(term)
+        #return unicode(term)
+        return term
     else: # explicit
         if type(term) is Literal:
             ret = u'"%s"' % term
@@ -568,8 +570,8 @@ def _format_variable(term, mode):
                 ret = u'%s@%s' % (ret, term.language)
             return ret.encode('utf-8')
         else:
-            return unicode(term).encode('utf-8')
-
+            #return unicode(term).encode('utf-8')
+            return term.encode('utf-8')
 
 class IriTemplateMapping(Resource):
 
